@@ -276,6 +276,17 @@ void ScenePathFinding::initMaze()
 		}
 	}
 
+	for (int i = 0; i < num_cell_x; i++)
+	{
+		for (int j = 0; j < num_cell_y; j++)
+		{
+			
+			if (terrain[i][j]!=0) {
+				//mirar 4 veins i veure si cadascun es diferent de 0, aleshores crea connexio i afegeix al graf
+			}
+
+		}
+	}
 }
 
 bool ScenePathFinding::loadTextures(char* filename_bg, char* filename_coin)
