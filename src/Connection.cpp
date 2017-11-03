@@ -2,7 +2,7 @@
 
 
 
-Connection::Connection()
+Connection::Connection(Node from, Node to, float cost)
 {
 }
 

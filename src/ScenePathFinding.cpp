@@ -1,4 +1,7 @@
 #include "ScenePathFinding.h"
+#include "Node.h"
+#include "Connection.h"
+#include "Graph.h"
 
 using namespace std;
 
@@ -282,7 +285,21 @@ void ScenePathFinding::initMaze()
 		{
 			
 			if (terrain[i][j]!=0) {
+
+				//mirar tots els veins de cada noda si es diferent a 0 (fara falta uns quant ifs per mirar si cada es pot afegir com a connexió)
+				//em de mirar amunt, avall, esquerre, dreta per cada node
+
 				//mirar 4 veins i veure si cadascun es diferent de 0, aleshores crea connexio i afegeix al graf
+
+				/*
+				Node node;
+				node.pos = Vector2D(i, j);
+				Node nodeVei;
+				node.pos = Vector2D(i+1, j+1);
+				Connection connection = Connection(node, nodeVei, 1);
+				*/
+
+				
 			}
 
 		}

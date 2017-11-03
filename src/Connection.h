@@ -12,13 +12,13 @@ public:
 	~Connection();
 
 	//Returns the non-negative cost of the connection
-	float GetCost();
+	float GetCost() { return cost; }
 
 	//Returns the node that this connection came from
-	Node GetFromNode();
+	Node GetFromNode() { return from; }
 
 	//Returns the node that this connection leads to
-	Node GetToNode();
+	Node GetToNode() { return to; }
 
 };
 
