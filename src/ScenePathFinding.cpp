@@ -182,6 +182,8 @@ void ScenePathFinding::drawCoin()
 void ScenePathFinding::initMaze()
 {
 
+	Graph graph;
+
 	// Initialize a list of Rectagles describing the maze geometry (useful for collision avoidance)
 	SDL_Rect rect = { 0, 0, 1280, 32 };
 	maze_rects.push_back(rect);
@@ -279,17 +281,58 @@ void ScenePathFinding::initMaze()
 		}
 	}
 
+	//llenamos graph con todas las conexiones de cada nodo
+	//tambien con el propio nodo guardamos cada conexion del nodo from a un vecino(para asi consultar las conexiones segun el nodo que se le pase a GetConnections(Node from) de la clase Graph)
+	//falta revisar que este todo bien creado y mirar los laterales para que se conecten
 	for (int i = 0; i < num_cell_x; i++)
 	{
 		for (int j = 0; j < num_cell_y; j++)
 		{
 			
 			if (terrain[i][j]!=0) {
+				Node from, to;
+				from.pos = Vector2D(i, j);
+				
+				//mirar todos los vecinos y si son diferentes a 0
 
-				//mirar tots els veins de cada noda si es diferent a 0 (fara falta uns quant ifs per mirar si cada es pot afegir com a connexió)
-				//em de mirar amunt, avall, esquerre, dreta per cada node
+				if (j % num_cell_y != (num_cell_y - 1)) { //derecha
+					if (terrain[i][j+1] != 0) {
+						to.pos = Vector2D(i, j+1);
+						Connection con = Connection(from, to, 1);
+						from.AddConnection(con);
+						graph.AddConnection(con);
+					}
+				}
 
-				//mirar 4 veins i veure si cadascun es diferent de 0, aleshores crea connexio i afegeix al graf
+				if (j % num_cell_y != 0) { //izquierda
+					if (terrain[i][j - 1] != 0) {
+						to.pos = Vector2D(i, j - 1);
+						Connection con = Connection(from, to, 1);
+						from.AddConnection(con);
+						graph.AddConnection(con);
+					}
+				}
+				
+				if (j / num_cell_y != 0) { //superior
+					if (terrain[i][j - num_cell_y] != 0) {
+						to.pos = Vector2D(i, j - num_cell_y);
+						Connection con = Connection(from, to, 1);
+						from.AddConnection(con);
+						graph.AddConnection(con);
+					}
+				}
+
+				if (j / num_cell_y != (num_cell_x - 1)) { //abajo
+					if (terrain[i][j + num_cell_y] != 0) {
+						to.pos = Vector2D(i, j + num_cell_y);
+						Connection con = Connection(from, to, 1);
+						from.AddConnection(con);
+						graph.AddConnection(con);
+					}
+				}
+
+
+			
 
 				/*
 				Node node;

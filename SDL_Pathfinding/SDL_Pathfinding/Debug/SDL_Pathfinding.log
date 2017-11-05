@@ -1,5 +1,15 @@
-﻿  ScenePathFinding3.cpp
+﻿  utils.cpp
+  SteeringBehavior.cpp
+  SDL_SimpleApp.cpp
+  ScenePathFinding3.cpp
+  ScenePathFinding2.cpp
+  ScenePathFinding.cpp
+  Node.cpp
   main.cpp
-  Generating Code...
-  SDL_Pathfinding.vcxproj -> C:\Users\ssin\Desktop\SDL_Pathfinding\\bin\SDL_Pathfinding.exe
-  SDL_Pathfinding.vcxproj -> C:\Users\ssin\Desktop\SDL_Pathfinding\\bin\SDL_Pathfinding.pdb (Partial PDB)
+  Graph.cpp
+  Connection.cpp
+c:\users\marc\documents\programacio_ex2\src\connection.cpp(6): error C2511: 'Connection::Connection(void)': la función miembro sobrecargada no se ha encontrado en 'Connection'
+  c:\users\marc\documents\programacio_ex2\src\connection.h(5): note: vea la declaración de 'Connection'
+  BFS.cpp
+  Agent.cpp
+  Generando código...

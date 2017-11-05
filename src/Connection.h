@@ -12,7 +12,7 @@ public:
 	~Connection();
 
 	//Returns the non-negative cost of the connection
-	float GetCost() { return cost; }
+	float Connection::GetCost() { return cost; }
 
 	//Returns the node that this connection came from
 	Node GetFromNode() { return from; }

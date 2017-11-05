@@ -11,7 +11,8 @@ Graph::~Graph()
 {
 }
 
-std::vector<Connection> GetConnections(Node) {
+std::vector<Connection> Graph::GetConnections(Node from) {
+	return from.GetConnections();
 	
 }
 
