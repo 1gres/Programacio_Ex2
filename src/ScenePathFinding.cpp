@@ -290,15 +290,15 @@ void ScenePathFinding::initMaze()
 		{
 			
 			if (terrain[i][j]!=0) {
-				Node from, to;
-				from.pos = Vector2D(i, j);
+				
+				Node from((float)i, (float)j);
 				
 				//mirar todos los vecinos y si son diferentes a 0
 
 				if (j % num_cell_y != (num_cell_y - 1)) { //derecha
 					if (terrain[i][j+1] != 0) {
-						to.pos = Vector2D(i, j+1);
-						Connection con = Connection(from, to, 1);
+						Node to((float)i, (float)(j + 1));
+						Connection con(from, to, 1);
 						from.AddConnection(con);
 						graph.AddConnection(con);
 					}
@@ -306,8 +306,8 @@ void ScenePathFinding::initMaze()
 
 				if (j % num_cell_y != 0) { //izquierda
 					if (terrain[i][j - 1] != 0) {
-						to.pos = Vector2D(i, j - 1);
-						Connection con = Connection(from, to, 1);
+						Node to((float)i, (float)(j - 1));
+						Connection con(from, to, 1);
 						from.AddConnection(con);
 						graph.AddConnection(con);
 					}
@@ -315,8 +315,8 @@ void ScenePathFinding::initMaze()
 				
 				if (j / num_cell_y != 0) { //superior
 					if (terrain[i][j - num_cell_y] != 0) {
-						to.pos = Vector2D(i, j - num_cell_y);
-						Connection con = Connection(from, to, 1);
+						Node to((float)i, (float)(j - num_cell_y));
+						Connection con(from, to, 1);
 						from.AddConnection(con);
 						graph.AddConnection(con);
 					}
@@ -324,8 +324,8 @@ void ScenePathFinding::initMaze()
 
 				if (j / num_cell_y != (num_cell_x - 1)) { //abajo
 					if (terrain[i][j + num_cell_y] != 0) {
-						to.pos = Vector2D(i, j + num_cell_y);
-						Connection con = Connection(from, to, 1);
+						Node to((float)i, (float)(j + num_cell_y));
+						Connection con(from, to, 1);
 						from.AddConnection(con);
 						graph.AddConnection(con);
 					}

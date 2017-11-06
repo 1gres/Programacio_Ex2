@@ -7,11 +7,12 @@ class Node
 {
 public:
 	Node();
+	Node(float _x, float _y);
 	~Node();
 	Vector2D pos;
 
 	//Add new connection this node to other node
-	void AddConnection(Connection);
+	void AddConnection(Connection c);
 
 	//Get connections of node
 	std::vector<Connection> GetConnections();
