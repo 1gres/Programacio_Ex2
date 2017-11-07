@@ -4,8 +4,10 @@
 class Connection
 {
 public:
+	Node from, to;
 
-	Connection(Node _from, Node _to, float _cost);
+	float cost;
+	Connection(Node _rom, Node _to, float _cost);
 	~Connection();
 
 	//Returns the non-negative cost of the connection
@@ -17,8 +19,6 @@ public:
 	//Returns the node that this connection leads to
 	Node GetToNode();
 private:
-	Node from, to;
-
-	float cost;
+	
 };
 

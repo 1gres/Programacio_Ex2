@@ -1,7 +1,8 @@
 #include "ScenePathFinding.h"
 #include "Node.h"
-#include "Connection.h"
 #include "Graph.h"
+#include "Connection.h"
+
 
 using namespace std;
 
@@ -298,8 +299,8 @@ void ScenePathFinding::initMaze()
 				if (j % num_cell_y != (num_cell_y - 1)) { //derecha
 					if (terrain[i][j+1] != 0) {
 						Node to((float)i, (float)(j + 1));
-						Connection con(from, to, 1);
-						from.AddConnection(con);
+						Connection con(from, to, 1.f);
+						
 						graph.AddConnection(con);
 					}
 				}
@@ -307,8 +308,8 @@ void ScenePathFinding::initMaze()
 				if (j % num_cell_y != 0) { //izquierda
 					if (terrain[i][j - 1] != 0) {
 						Node to((float)i, (float)(j - 1));
-						Connection con(from, to, 1);
-						from.AddConnection(con);
+						Connection con(from, to, 1.f);
+
 						graph.AddConnection(con);
 					}
 				}
@@ -316,8 +317,8 @@ void ScenePathFinding::initMaze()
 				if (j / num_cell_y != 0) { //superior
 					if (terrain[i][j - num_cell_y] != 0) {
 						Node to((float)i, (float)(j - num_cell_y));
-						Connection con(from, to, 1);
-						from.AddConnection(con);
+						Connection con(from, to, 1.f);
+
 						graph.AddConnection(con);
 					}
 				}
@@ -325,22 +326,11 @@ void ScenePathFinding::initMaze()
 				if (j / num_cell_y != (num_cell_x - 1)) { //abajo
 					if (terrain[i][j + num_cell_y] != 0) {
 						Node to((float)i, (float)(j + num_cell_y));
-						Connection con(from, to, 1);
-						from.AddConnection(con);
+						Connection con(from, to, 1.f);
+
 						graph.AddConnection(con);
 					}
 				}
-
-
-			
-
-				/*
-				Node node;
-				node.pos = Vector2D(i, j);
-				Node nodeVei;
-				node.pos = Vector2D(i+1, j+1);
-				Connection connection = Connection(node, nodeVei, 1);
-				*/
 
 				
 			}

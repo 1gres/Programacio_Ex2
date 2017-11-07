@@ -1,9 +1,9 @@
-#pragma once
 #include <vector>
 #include <time.h>
 #include "Scene.h"
 #include "Agent.h"
 #include "Path.h"
+
 
 class ScenePathFinding :
 	public Scene

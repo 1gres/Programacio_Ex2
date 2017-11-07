@@ -3,8 +3,8 @@
 
 Connection::Connection(Node _from, Node _to, float _cost)
 {
-	from = Node(_from.pos.x, _from.pos.y);
-	to = Node(_to.pos.x, _to.pos.y);
+	from = _from;
+	to = _to;
 	cost = _cost;
 }
 
