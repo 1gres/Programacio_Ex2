@@ -17,6 +17,7 @@ public:
 	const char* getTitle();
 private:
 	Graph graph;
+	int tipusAlgoritme;
 	std::vector<Agent*> agents;
 	Vector2D coinPosition;
 	Vector2D currentTarget;

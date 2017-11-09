@@ -1,6 +1,7 @@
 #include "ScenePathFinding.h"
 #include "Node.h"
 #include "Connection.h"
+#include "BFS.h"
 
 
 using namespace std;
@@ -73,6 +74,27 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 				path.points.push_back(cell2pix(cell));
 			}
 		}
+		break;
+	case SDL_SCANCODE_A:
+		//BFS
+		tipusAlgoritme = 0;
+		//cridar funcions del algoritme
+		break;
+
+	case SDL_SCANCODE_S:
+		//Dijkstra
+		tipusAlgoritme = 1;
+		//cridar funcions del algoritme
+		break;
+	case SDL_SCANCODE_D:
+		//GBFS
+		tipusAlgoritme = 2;
+		//cridar funcions del algoritme
+		break;
+	case SDL_SCANCODE_F:
+		//A*
+		tipusAlgoritme = 3;
+		//cridar funcions del algoritme
 		break;
 	default:
 		break;
