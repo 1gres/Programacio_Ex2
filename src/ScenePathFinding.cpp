@@ -282,11 +282,11 @@ void ScenePathFinding::initMaze()
 		}
 	}
 
-	//llenamos graph con todas las conexiones de cada nodo
-	//tambien con el propio nodo guardamos cada conexion del nodo from a un vecino(para asi consultar las conexiones segun el nodo que se le pase a GetConnections(Node from) de la clase Graph)
-	//falta revisar que este todo bien creado y mirar los laterales para que se conecten
+	//40 celdas de width y 24 de height
+	//el total de todas las conexiones da como resultado: 2486
 	for (int i = 0; i < num_cell_x; i++)
 	{
+		//std::cout << i << std::endl;
 		for (int j = 0; j < num_cell_y; j++)
 		{
 			
@@ -294,49 +294,113 @@ void ScenePathFinding::initMaze()
 				
 				Node from((float)i, (float)j);
 				
-				//mirar todos los vecinos y si son diferentes a 0
+				//conexiones derecha (banda)
+				if (((i == 39) && (j >= 10 && j <= 12))) {
+					Node toRight((float)0, (float)(j));
+					Connection conRight(from, toRight, 1.f);
+					graph.AddConnection(conRight);
 
-				if (j % num_cell_y != (num_cell_y - 1)) { //derecha
-					if (terrain[i][j+1] != 0) {
-						Node to((float)i, (float)(j + 1));
-						Connection con(from, to, 1.f);
-						
-						graph.AddConnection(con);
+					Node toLeft((float)i-1, (float)(j));
+					Connection conLeft(from, toLeft, 1.f);
+					graph.AddConnection(conLeft);
+
+					if (j == 10) {
+						Node toDown((float)i, (float)(j+1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
 					}
+					else if (j == 11) {
+						Node toUp((float)i, (float)(j-1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
+
+						Node toDown((float)i, (float)(j+1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
+					}
+					else if (j == 12) {
+						Node toUp((float)i, (float)(j-1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
+					}
+
 				}
 
-				if (j % num_cell_y != 0) { //izquierda
-					if (terrain[i][j - 1] != 0) {
-						Node to((float)i, (float)(j - 1));
-						Connection con(from, to, 1.f);
+				//conexiones izquierda (banda)
+				if (((i == 0) && (j >= 10 && j <= 12))) {
+					Node toLeft((float)39, (float)(j));
+					Connection conLeft(from, toLeft, 1.f);
+					graph.AddConnection(conLeft);
 
-						graph.AddConnection(con);
+					Node toRight((float)i+1, (float)(j));
+					Connection conRight(from, toRight, 1.f);
+					graph.AddConnection(conRight);
+
+					if (j == 10) {
+						Node toDown((float)i, (float)(j + 1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
+					}
+					else if (j == 11) {
+						Node toUp((float)i, (float)(j - 1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
+
+						Node toDown((float)i, (float)(j + 1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
+					}
+					else if (j == 12) {
+						Node toUp((float)i, (float)(j - 1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
 					}
 				}
 				
-				if (j / num_cell_y != 0) { //superior
-					if (terrain[i][j - num_cell_y] != 0) {
-						Node to((float)i, (float)(j - num_cell_y));
+				//mirar vecinos de la derecha teniendo en cuenta paredes laterales a excepción de los tres nodos laterales derechos
+				if (((i > 0 && i < num_cell_x-2) && (j > 0 && j < num_cell_y)) || ((i < num_cell_x-1) && (j >= 10 && j <= 12) && (i > 0))) {
+					if (terrain[i + 1][j] != 0) {
+						Node to((float)i+1, (float)(j));
 						Connection con(from, to, 1.f);
-
 						graph.AddConnection(con);
+						//std::cout << from.pos.x << " to " << to.pos.x << "; " << std::endl;
+					}
+				}
+				
+				//mirar vecinos de la izquierda teniendo en cuenta paredes laterales a excepción de los tres nodos laterales izquierdos
+				if (((i > 1 && i < num_cell_x-1) && (j > 0 && j < num_cell_y)) || ((i >= 1 && i < num_cell_x-1) && (j >= 10 && j <= 12))) {
+					if (terrain[i - 1][j] != 0) {
+						Node to((float)i-1, (float)(j));
+						Connection con(from, to, 1.f);
+						graph.AddConnection(con);
+						//std::cout << from.pos.x << " to " << to.pos.x << "; " << std::endl;
 					}
 				}
 
-				if (j / num_cell_y != (num_cell_x - 1)) { //abajo
-					if (terrain[i][j + num_cell_y] != 0) {
-						Node to((float)i, (float)(j + num_cell_y));
+				//mirar los vecinos de arriba
+				if (((i > 0 && i < num_cell_x-1) && (j > 1 && j < num_cell_y-1))) {
+					if (terrain[i][j-1] != 0) {
+						Node to((float)i, (float)(j-1));
 						Connection con(from, to, 1.f);
-
 						graph.AddConnection(con);
+						//std::cout << from.pos.y << " to " << to.pos.y << "; " << std::endl;
 					}
 				}
 
+				//mirar los vecinos de abajo
+				if (((i > 0 && i < num_cell_x-1) && (j > 0 && j < num_cell_y-2))) {
+					if (terrain[i][j+1] != 0) {
+						Node to((float)i, (float)(j+1));
+						Connection con(from, to, 1.f);
+						graph.AddConnection(con);
+						//std::cout << from.pos.y << " to " << to.pos.y << "; " << std::endl;
+					}
+				}
 				
 			}
-
 		}
 	}
+	
 }
 
 bool ScenePathFinding::loadTextures(char* filename_bg, char* filename_coin)
