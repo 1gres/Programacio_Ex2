@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Agent.h"
 #include "Path.h"
+#include "Graph.h"
 
 
 class ScenePathFinding :
@@ -15,6 +16,7 @@ public:
 	void draw();
 	const char* getTitle();
 private:
+	Graph graph;
 	std::vector<Agent*> agents;
 	Vector2D coinPosition;
 	Vector2D currentTarget;
@@ -26,6 +28,7 @@ private:
 	std::vector<SDL_Rect> maze_rects;
 	void drawMaze();
 	void drawCoin();
+	void createGraph();
 	SDL_Texture *background_texture;
 	SDL_Texture *coin_texture;
 	void initMaze();

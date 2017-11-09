@@ -1,6 +1,5 @@
 #include "ScenePathFinding.h"
 #include "Node.h"
-#include "Graph.h"
 #include "Connection.h"
 
 
@@ -180,10 +179,131 @@ void ScenePathFinding::drawCoin()
 	SDL_RenderCopy(TheApp::Instance()->getRenderer(), coin_texture, NULL, &dstrect);
 }
 
+void ScenePathFinding::createGraph() {
+	
+
+	//40 celdas de width y 24 de height
+	//el total de todas las conexiones da como resultado: 2486
+	for (int i = 0; i < num_cell_x; i++)
+	{
+		//std::cout << i << std::endl;
+		for (int j = 0; j < num_cell_y; j++)
+		{
+
+			if (terrain[i][j] != 0) {
+
+				Node from((float)i, (float)j);
+
+				//conexiones derecha (banda)
+				if (((i == 39) && (j >= 10 && j <= 12))) {
+					Node toRight((float)0, (float)(j));
+					Connection conRight(from, toRight, 1.f);
+					graph.AddConnection(conRight);
+
+					Node toLeft((float)i - 1, (float)(j));
+					Connection conLeft(from, toLeft, 1.f);
+					graph.AddConnection(conLeft);
+
+					if (j == 10) {
+						Node toDown((float)i, (float)(j + 1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
+					}
+					else if (j == 11) {
+						Node toUp((float)i, (float)(j - 1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
+
+						Node toDown((float)i, (float)(j + 1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
+					}
+					else if (j == 12) {
+						Node toUp((float)i, (float)(j - 1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
+					}
+
+				}
+
+				//conexiones izquierda (banda)
+				if (((i == 0) && (j >= 10 && j <= 12))) {
+					Node toLeft((float)39, (float)(j));
+					Connection conLeft(from, toLeft, 1.f);
+					graph.AddConnection(conLeft);
+
+					Node toRight((float)i + 1, (float)(j));
+					Connection conRight(from, toRight, 1.f);
+					graph.AddConnection(conRight);
+
+					if (j == 10) {
+						Node toDown((float)i, (float)(j + 1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
+					}
+					else if (j == 11) {
+						Node toUp((float)i, (float)(j - 1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
+
+						Node toDown((float)i, (float)(j + 1));
+						Connection conDown(from, toDown, 1.f);
+						graph.AddConnection(conDown);
+					}
+					else if (j == 12) {
+						Node toUp((float)i, (float)(j - 1));
+						Connection conUp(from, toUp, 1.f);
+						graph.AddConnection(conUp);
+					}
+				}
+
+				//mirar vecinos de la derecha teniendo en cuenta paredes laterales a excepción de los tres nodos laterales derechos
+				if (((i > 0 && i < num_cell_x - 2) && (j > 0 && j < num_cell_y)) || ((i < num_cell_x - 1) && (j >= 10 && j <= 12) && (i > 0))) {
+					if (terrain[i + 1][j] != 0) {
+						Node to((float)i + 1, (float)(j));
+						Connection con(from, to, 1.f);
+						graph.AddConnection(con);
+						//std::cout << from.pos.x << " to " << to.pos.x << "; " << std::endl;
+					}
+				}
+
+				//mirar vecinos de la izquierda teniendo en cuenta paredes laterales a excepción de los tres nodos laterales izquierdos
+				if (((i > 1 && i < num_cell_x - 1) && (j > 0 && j < num_cell_y)) || ((i >= 1 && i < num_cell_x - 1) && (j >= 10 && j <= 12))) {
+					if (terrain[i - 1][j] != 0) {
+						Node to((float)i - 1, (float)(j));
+						Connection con(from, to, 1.f);
+						graph.AddConnection(con);
+						//std::cout << from.pos.x << " to " << to.pos.x << "; " << std::endl;
+					}
+				}
+
+				//mirar los vecinos de arriba
+				if (((i > 0 && i < num_cell_x - 1) && (j > 1 && j < num_cell_y - 1))) {
+					if (terrain[i][j - 1] != 0) {
+						Node to((float)i, (float)(j - 1));
+						Connection con(from, to, 1.f);
+						graph.AddConnection(con);
+						//std::cout << from.pos.y << " to " << to.pos.y << "; " << std::endl;
+					}
+				}
+
+				//mirar los vecinos de abajo
+				if (((i > 0 && i < num_cell_x - 1) && (j > 0 && j < num_cell_y - 2))) {
+					if (terrain[i][j + 1] != 0) {
+						Node to((float)i, (float)(j + 1));
+						Connection con(from, to, 1.f);
+						graph.AddConnection(con);
+						//std::cout << from.pos.y << " to " << to.pos.y << "; " << std::endl;
+					}
+				}
+
+			}
+		}
+	}
+}
+
 void ScenePathFinding::initMaze()
 {
-
-	Graph graph;
 
 	// Initialize a list of Rectagles describing the maze geometry (useful for collision avoidance)
 	SDL_Rect rect = { 0, 0, 1280, 32 };
@@ -282,124 +402,7 @@ void ScenePathFinding::initMaze()
 		}
 	}
 
-	//40 celdas de width y 24 de height
-	//el total de todas las conexiones da como resultado: 2486
-	for (int i = 0; i < num_cell_x; i++)
-	{
-		//std::cout << i << std::endl;
-		for (int j = 0; j < num_cell_y; j++)
-		{
-			
-			if (terrain[i][j]!=0) {
-				
-				Node from((float)i, (float)j);
-				
-				//conexiones derecha (banda)
-				if (((i == 39) && (j >= 10 && j <= 12))) {
-					Node toRight((float)0, (float)(j));
-					Connection conRight(from, toRight, 1.f);
-					graph.AddConnection(conRight);
-
-					Node toLeft((float)i-1, (float)(j));
-					Connection conLeft(from, toLeft, 1.f);
-					graph.AddConnection(conLeft);
-
-					if (j == 10) {
-						Node toDown((float)i, (float)(j+1));
-						Connection conDown(from, toDown, 1.f);
-						graph.AddConnection(conDown);
-					}
-					else if (j == 11) {
-						Node toUp((float)i, (float)(j-1));
-						Connection conUp(from, toUp, 1.f);
-						graph.AddConnection(conUp);
-
-						Node toDown((float)i, (float)(j+1));
-						Connection conDown(from, toDown, 1.f);
-						graph.AddConnection(conDown);
-					}
-					else if (j == 12) {
-						Node toUp((float)i, (float)(j-1));
-						Connection conUp(from, toUp, 1.f);
-						graph.AddConnection(conUp);
-					}
-
-				}
-
-				//conexiones izquierda (banda)
-				if (((i == 0) && (j >= 10 && j <= 12))) {
-					Node toLeft((float)39, (float)(j));
-					Connection conLeft(from, toLeft, 1.f);
-					graph.AddConnection(conLeft);
-
-					Node toRight((float)i+1, (float)(j));
-					Connection conRight(from, toRight, 1.f);
-					graph.AddConnection(conRight);
-
-					if (j == 10) {
-						Node toDown((float)i, (float)(j + 1));
-						Connection conDown(from, toDown, 1.f);
-						graph.AddConnection(conDown);
-					}
-					else if (j == 11) {
-						Node toUp((float)i, (float)(j - 1));
-						Connection conUp(from, toUp, 1.f);
-						graph.AddConnection(conUp);
-
-						Node toDown((float)i, (float)(j + 1));
-						Connection conDown(from, toDown, 1.f);
-						graph.AddConnection(conDown);
-					}
-					else if (j == 12) {
-						Node toUp((float)i, (float)(j - 1));
-						Connection conUp(from, toUp, 1.f);
-						graph.AddConnection(conUp);
-					}
-				}
-				
-				//mirar vecinos de la derecha teniendo en cuenta paredes laterales a excepción de los tres nodos laterales derechos
-				if (((i > 0 && i < num_cell_x-2) && (j > 0 && j < num_cell_y)) || ((i < num_cell_x-1) && (j >= 10 && j <= 12) && (i > 0))) {
-					if (terrain[i + 1][j] != 0) {
-						Node to((float)i+1, (float)(j));
-						Connection con(from, to, 1.f);
-						graph.AddConnection(con);
-						//std::cout << from.pos.x << " to " << to.pos.x << "; " << std::endl;
-					}
-				}
-				
-				//mirar vecinos de la izquierda teniendo en cuenta paredes laterales a excepción de los tres nodos laterales izquierdos
-				if (((i > 1 && i < num_cell_x-1) && (j > 0 && j < num_cell_y)) || ((i >= 1 && i < num_cell_x-1) && (j >= 10 && j <= 12))) {
-					if (terrain[i - 1][j] != 0) {
-						Node to((float)i-1, (float)(j));
-						Connection con(from, to, 1.f);
-						graph.AddConnection(con);
-						//std::cout << from.pos.x << " to " << to.pos.x << "; " << std::endl;
-					}
-				}
-
-				//mirar los vecinos de arriba
-				if (((i > 0 && i < num_cell_x-1) && (j > 1 && j < num_cell_y-1))) {
-					if (terrain[i][j-1] != 0) {
-						Node to((float)i, (float)(j-1));
-						Connection con(from, to, 1.f);
-						graph.AddConnection(con);
-						//std::cout << from.pos.y << " to " << to.pos.y << "; " << std::endl;
-					}
-				}
-
-				//mirar los vecinos de abajo
-				if (((i > 0 && i < num_cell_x-1) && (j > 0 && j < num_cell_y-2))) {
-					if (terrain[i][j+1] != 0) {
-						Node to((float)i, (float)(j+1));
-						Connection con(from, to, 1.f);
-						graph.AddConnection(con);
-						//std::cout << from.pos.y << " to " << to.pos.y << "; " << std::endl;
-					}
-				}
-				
-			}
-		}
-	}
+	createGraph();
 	
 }
 
