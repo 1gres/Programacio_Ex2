@@ -1,9 +1,15 @@
-﻿  ScenePathFinding.cpp
-  Graph.cpp
-c:\users\mmolina\documents\programacio_ex2\src\graph.cpp(19): warning C4018: '<': signed/unsigned mismatch
+﻿  BFS.cpp
   Generating Code...
   Compiling...
-  main.cpp
+  Agent.cpp
   Generating Code...
+  Compiling...
+  ScenePathFinding3.cpp
+  ScenePathFinding2.cpp
+  ScenePathFinding.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
+  SteeringBehavior.cpp
   SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe
   SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.pdb (Partial PDB)

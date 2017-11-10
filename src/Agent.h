@@ -35,6 +35,7 @@ private:
 public:
 	Agent();
 	~Agent();
+	int posAgentCasella;
 	SteeringBehavior *Behavior();
 	Vector2D getPosition();
 	Vector2D getTarget();

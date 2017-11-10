@@ -6,6 +6,7 @@ class Node
 {
 public:
 	Vector2D pos;
+	bool visited;
 	Node();
 	Node(float _x, float _y);
 	~Node();
