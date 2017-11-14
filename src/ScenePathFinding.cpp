@@ -37,6 +37,29 @@ ScenePathFinding::ScenePathFinding()
 	currentTarget = Vector2D(0, 0);
 	currentTargetIndex = -1;
 
+	//BFS default algorithm
+	if (tipusAlgoritme == 0) {
+		Node agentPosition(0,0);
+
+		agentPosition.pos = pix2cell(agents[0]->getPosition());
+
+		Node coinPos(0,0);
+		coinPos.pos = pix2cell(coinPosition);
+
+		
+		std::vector<Node> myPath = bfsObject.BFSSearch(graph, agentPosition, coinPos);
+		std::vector<Vector2D> pathConverted;
+		
+		for (int i = 0; i < myPath.size(); i++) {
+			pathConverted.push_back(myPath[i].pos);
+		}
+
+		for (int i = 0; i < pathConverted.size(); i++) {
+			
+			path.points.push_back(cell2pix(pathConverted[i]));
+		}
+		
+	}
 }
 
 ScenePathFinding::~ScenePathFinding()

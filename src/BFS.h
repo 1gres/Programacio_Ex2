@@ -8,7 +8,8 @@
 class BFS
 {
 public:
-	//std::vector<Node> BFS(Graph graph, Node root, Node goal);
+	BFS();
+	std::vector<Node> BFSSearch(Graph graph, Node root, Node goal);
 	~BFS();
 private:
 	

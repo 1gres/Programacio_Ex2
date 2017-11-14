@@ -19,9 +19,14 @@ std::vector<Connection> Graph::GetConnections(Node from) {
 	for (int i = 0; i < graph.size(); i++) {
 		if (graph[i].GetFromNode().pos == from.pos) {
 			connections.push_back(graph[i]);
+			if (connections.size()>=4) {
+				break;
+			}
+			/*std::cout << "from x: " << connections[i].from.pos.x << "\nfrom y: " << connections[i].from.pos.y << std::endl;
+			std::cout << "to x: " << connections[i].to.pos.x << "\nto: " << connections[i].to.pos.y << std::endl;*/
 		}
 	}
-
+	
 	return connections;
 
 	//alternativa..en lugar de retornar el vector con objetos connection, devolver directamente un vector con cada nodo TO del parametro FROM

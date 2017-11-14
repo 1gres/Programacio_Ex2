@@ -2,6 +2,7 @@
 #include <vector>
 #include "Node.h"
 #include "Connection.h"
+#include <iostream>
 
 class Graph
 {

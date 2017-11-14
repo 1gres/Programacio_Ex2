@@ -4,6 +4,8 @@
 #include "Agent.h"
 #include "Path.h"
 #include "Graph.h"
+#include "BFS.h"
+#include <iostream>
 
 
 class ScenePathFinding :
@@ -17,6 +19,7 @@ public:
 	const char* getTitle();
 private:
 	Graph graph;
+	BFS bfsObject;
 	int tipusAlgoritme;
 	std::vector<Agent*> agents;
 	Vector2D coinPosition;

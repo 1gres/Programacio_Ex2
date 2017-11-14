@@ -7,7 +7,7 @@ public:
 	Node from, to;
 
 	float cost;
-	Connection(Node _rom, Node _to, float _cost);
+	Connection(Node _from, Node _to, float _cost);
 	~Connection();
 
 	//Returns the non-negative cost of the connection
