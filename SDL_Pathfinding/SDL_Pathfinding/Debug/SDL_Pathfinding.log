@@ -1,5 +1,2 @@
 ﻿  BFS.cpp
-c:\users\mmolina\documents\programacio_ex2\src\bfs.cpp(31): warning C4018: '<': signed/unsigned mismatch
-c:\users\mmolina\documents\programacio_ex2\src\bfs.cpp(44): warning C4018: '<': signed/unsigned mismatch
-  SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe
-  SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.pdb (Partial PDB)
+  SDL_Pathfinding.vcxproj -> C:\Users\Marc\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe

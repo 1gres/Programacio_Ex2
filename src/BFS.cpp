@@ -16,7 +16,7 @@ std::vector<Node> BFS::BFSSearch(Graph graph, Node root, Node goal)
 	root.visited = true;
 
 	frontier.push(root);
-	std::cout << "Node root x: " << root.pos.x << "\nNode root y: " << root.pos.y << std::endl;
+	//std::cout << "Node root x: " << root.pos.x << "\nNode root y: " << root.pos.y << std::endl;
 
 	std::vector<std::pair<Node,Node>> came_from;
 
@@ -28,20 +28,22 @@ std::vector<Node> BFS::BFSSearch(Graph graph, Node root, Node goal)
 			break;
 		}
 		connections = graph.GetConnections(current);
-		for (int i = 0; i < connections.size(); i++) {
+		for (unsigned int i = 0; i < connections.size(); i++) {
 			next = connections[i];
 			if (!next.GetToNode().visited) {
-				next.to.visited = true;
 				frontier.push(next.to);
+				next.to.visited = true;
 				came_from.push_back(std::make_pair(next.GetToNode(),current));
 			}
 			
 		}
+		std::cout << "x: " << current.pos.x << std::endl;
+		std::cout << "y: " << current.pos.y << std::endl;
 
 	}
 	
 	std::vector<Node> came_from_converted;
-	for (int i = 0; i < came_from.size(); i++) {
+	for (unsigned int i = 0; i < came_from.size(); i++) {
 		came_from_converted.push_back(came_from[i].second);
 	}
 	return came_from_converted;
