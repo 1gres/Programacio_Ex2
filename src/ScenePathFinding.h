@@ -19,6 +19,7 @@ public:
 	void draw();
 	const char* getTitle();
 private:
+
 	Graph graph;
 	BFS bfs;
 	Node start;

@@ -86,32 +86,32 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 			break;
 		}
 			
-		if (event->key.keysym.scancode == SDL_SCANCODE_0) {
+		if (event->key.keysym.scancode == SDL_SCANCODE_T) {
 			//Default
 			tipusAlgoritme = 0;
 			std::cout << "tipusAlgoritme = 0, Mouse" << std::endl;
 			break;
 		}
 			
-		if (event->key.keysym.scancode == SDL_SCANCODE_A) {
+		if (event->key.keysym.scancode == SDL_SCANCODE_Q) {
 			//BFS
 			tipusAlgoritme = 1;
 			std::cout << "tipusAlgoritme = 1, BFS" << std::endl;
 			break;
 		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_B) {
+		if (event->key.keysym.scancode == SDL_SCANCODE_W) {
 			//Dikstra
 			tipusAlgoritme = 2;
 			std::cout << "tipusAlgoritme = 2, Dikstra" << std::endl;
 			break;
 		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_C) {
+		if (event->key.keysym.scancode == SDL_SCANCODE_E) {
 			//Greedy
 			tipusAlgoritme = 3;
 			std::cout << "tipusAlgoritme = 3, Greedy" << std::endl;
 			break;
 		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_D) {
+		if (event->key.keysym.scancode == SDL_SCANCODE_R) {
 			//A*
 			tipusAlgoritme = 4;
 			std::cout << "tipusAlgoritme = 4, A*" << std::endl;
@@ -266,7 +266,7 @@ void ScenePathFinding::draw()
 
 const char* ScenePathFinding::getTitle()
 {
-	return "BFS(Default): A || Dikstra: B || Greedy: C || A*: D || Mouse: 0";
+	return "BFS(Default): Q || Dikstra: W || Greedy: E || A*: R || Mouse: T";
 }
 
 void ScenePathFinding::drawMaze()
