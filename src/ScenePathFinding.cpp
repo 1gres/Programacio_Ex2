@@ -37,26 +37,27 @@ ScenePathFinding::ScenePathFinding()
 	currentTarget = Vector2D(0, 0);
 	currentTargetIndex = -1;
 
+	
+	Node agentPosition(0,0);
+
+	agentPosition.pos = pix2cell(agents[0]->getPosition());
+
+	Node coinPos(0,0);
+	coinPos.pos.x = coinPosition.x;
+	coinPos.pos.y = coinPosition.y;
+
+	//Si quieres hacer click con mous pulsar tecla 0
+	//Por defecto se usa BFS...tipusAlgoritme = 1
+	tipusAlgoritme = 1;
+
 	//BFS default algorithm
-	if (tipusAlgoritme == 0) {
-		Node agentPosition(0,0);
+	if (tipusAlgoritme == 1) {
+		std::cout << "tipusAlgoritme = 1, BFS" << std::endl;
+		myPath = bfs.BFSSearch(graph, agentPosition, coinPos);
 
-		agentPosition.pos = pix2cell(agents[0]->getPosition());
-
-		Node coinPos(0,0);
-		coinPos.pos.x = coinPosition.x;
-		coinPos.pos.y = coinPosition.y;
-		
-		std::vector<Node> myPath = bfsObject.BFSSearch(graph, agentPosition, coinPos);
-		std::vector<Vector2D> pathConverted;
-		
 		for (unsigned int i = 0; i < myPath.size(); i++) {
-			pathConverted.push_back(myPath[i].pos);
-		}
-
-		for (unsigned int i = 0; i < pathConverted.size(); i++) {
 			
-			path.points.push_back(cell2pix(pathConverted[i]));
+			path.points.push_back(cell2pix(myPath[i]));
 		}
 		
 	}
@@ -80,44 +81,59 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
-		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
+		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE) {
 			draw_grid = !draw_grid;
-		break;
+			break;
+		}
+			
+		if (event->key.keysym.scancode == SDL_SCANCODE_0) {
+			//Default
+			tipusAlgoritme = 0;
+			std::cout << "tipusAlgoritme = 0, Mouse" << std::endl;
+			break;
+		}
+			
+		if (event->key.keysym.scancode == SDL_SCANCODE_A) {
+			//BFS
+			tipusAlgoritme = 1;
+			std::cout << "tipusAlgoritme = 1, BFS" << std::endl;
+			break;
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_B) {
+			//Dikstra
+			tipusAlgoritme = 2;
+			std::cout << "tipusAlgoritme = 2, Dikstra" << std::endl;
+			break;
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_C) {
+			//Greedy
+			tipusAlgoritme = 3;
+			std::cout << "tipusAlgoritme = 3, Greedy" << std::endl;
+			break;
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_D) {
+			//A*
+			tipusAlgoritme = 4;
+			std::cout << "tipusAlgoritme = 4, A*" << std::endl;
+			break;
+		}
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
-			Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			if (isValidCell(cell))
+		if (tipusAlgoritme == 0) {
+			if (event->button.button == SDL_BUTTON_LEFT)
 			{
-				if (path.points.size() > 0)
-					if (path.points[path.points.size() - 1] == cell2pix(cell))
-						break;
+				Vector2D cell = pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
+				if (isValidCell(cell))
+				{
+					if (path.points.size() > 0)
+						if (path.points[path.points.size() - 1] == cell2pix(cell))
+							break;
 
-				path.points.push_back(cell2pix(cell));
+					path.points.push_back(cell2pix(cell));
+				}
 			}
 		}
-		break;
-	case SDL_SCANCODE_A:
-		//BFS
-		tipusAlgoritme = 0;
-		//cridar funcions del algoritme
-		break;
-
-	case SDL_SCANCODE_S:
-		//Dijkstra
-		tipusAlgoritme = 1;
-		//cridar funcions del algoritme
-		break;
-	case SDL_SCANCODE_D:
-		//GBFS
-		tipusAlgoritme = 2;
-		//cridar funcions del algoritme
-		break;
-	case SDL_SCANCODE_F:
-		//A*
-		tipusAlgoritme = 3;
-		//cridar funcions del algoritme
+		
 		break;
 	default:
 		break;
@@ -133,8 +149,7 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 			if (currentTargetIndex == path.points.size() - 1)
 			{
 				if (dist < 3)
-				{
-					path.points.clear();
+				{					
 					currentTargetIndex = -1;
 					agents[0]->setVelocity(Vector2D(0,0));
 					// if we have arrived to the coin, replace it ina random cell!
@@ -143,6 +158,38 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 						coinPosition = Vector2D(-1, -1);
 						while ((!isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, pix2cell(agents[0]->getPosition()))<3))
 							coinPosition = Vector2D((float)(rand() % num_cell_x), (float)(rand() % num_cell_y));
+
+						agents[0]->setPosition(path.points.back());
+						
+						path.points.clear();
+
+						Node agentPosition(0, 0);
+
+						agentPosition.pos = pix2cell(agents[0]->getPosition());
+
+						Node coinPos(0, 0);
+						coinPos.pos.x = coinPosition.x;
+						coinPos.pos.y = coinPosition.y;
+
+						//Si le das a la tecla A el tipusAlgoritme es 1..por lo tanto BFS
+						if (tipusAlgoritme == 1) {
+							// Breadth First Search
+							myPath = bfs.BFSSearch(graph, agentPosition, coinPos);
+							for (unsigned int i = 0; i <myPath.size(); i++) {
+								path.points.push_back(cell2pix(myPath[i]));
+							}
+						}
+						else if (tipusAlgoritme == 2) {
+							// Dikstra
+						}
+						else if (tipusAlgoritme == 3) {
+							//Greedy
+						}
+						else if (tipusAlgoritme == 4) {
+							//A*
+						}
+
+						
 					}
 				}
 				else
@@ -154,8 +201,29 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 			}
 			currentTargetIndex++;
 		}
+		
+		/*
+		Vector2D cellAgent = pix2cell(agents[0]->getPosition());
+		Vector2D currentt = pix2cell(currentTarget);
 
+		if ((cellAgent.x == 0 && currentt.x == 39)&&((cellAgent.y >= 10 && cellAgent.y <= 12) && (currentt.y <= 10 && currentt.y <= 12))) {
+			
+			Vector2D o(39, cellAgent.y);
+			Vector2D u = cell2pix(o);
+			agents[0]->setPosition(u);
+			currentTarget = u;
+		}
+		else if((cellAgent.x == 39 && currentt.x == 0) && ((cellAgent.y >= 10 && cellAgent.y <= 12) && (currentt.y <= 10 && currentt.y <= 12))) {
+			Vector2D o(0, cellAgent.y);
+			Vector2D u = cell2pix(o);
+			agents[0]->setPosition(u);
+			currentTarget = u;
+		}
+		else {
+			currentTarget = path.points[currentTargetIndex];
+		}*/
 		currentTarget = path.points[currentTargetIndex];
+		
 		Vector2D steering_force = agents[0]->Behavior()->Seek(agents[0], currentTarget, dtime);
 		agents[0]->update(steering_force, dtime, event);
 	} 
@@ -198,7 +266,7 @@ void ScenePathFinding::draw()
 
 const char* ScenePathFinding::getTitle()
 {
-	return "SDL Steering Behaviors :: PathFinding1 Demo";
+	return "BFS(Default): A || Dikstra: B || Greedy: C || A*: D || Mouse: 0";
 }
 
 void ScenePathFinding::drawMaze()

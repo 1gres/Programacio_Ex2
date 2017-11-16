@@ -8,6 +8,8 @@
 #pragma once
 
 #include <math.h>
+#include <tuple> 
+
 
 #ifndef M_PI	
 #define M_PI	3.14159265358979323846   // pi
@@ -82,6 +84,22 @@ struct Vector2D
 	inline bool operator!=(const Vector2D& rhs) const
 	{
 		return !operator==(rhs);
+	}
+
+	inline bool operator<(const Vector2D& rhs) const {
+		return std::tie(x, y) < std::tie(rhs.x, rhs.y);
+	}
+
+	inline bool operator<=(const Vector2D& rhs) const {
+		return !(std::tie(x, y) <  std::tie(rhs.x, rhs.y));
+	}
+
+	inline bool operator>(const Vector2D& rhs) const {
+		return std::tie(x, y) <  std::tie(rhs.x, rhs.y);
+	}
+
+	inline bool operator>=(const Vector2D& rhs) const {
+		return !(std::tie(x, y) <  std::tie(rhs.x, rhs.y));
 	}
 	
 	inline Vector2D Normalize()
@@ -290,4 +308,14 @@ namespace Vector2DUtils
 			return true;
 		return false;
 	}
+}
+
+// Necessary to use unordered_maps
+namespace std {
+	template<>
+	struct hash<Vector2D> {
+		size_t operator()(const Vector2D& v) const {
+			return std::hash<float>()(v.Length());
+		}
+	};
 }

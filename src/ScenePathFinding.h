@@ -6,6 +6,7 @@
 #include "Graph.h"
 #include "BFS.h"
 #include <iostream>
+#include "Node.h"
 
 
 class ScenePathFinding :
@@ -19,7 +20,9 @@ public:
 	const char* getTitle();
 private:
 	Graph graph;
-	BFS bfsObject;
+	BFS bfs;
+	Node start;
+	std::vector<Vector2D> myPath;
 	int tipusAlgoritme;
 	std::vector<Agent*> agents;
 	Vector2D coinPosition;
