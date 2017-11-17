@@ -135,8 +135,10 @@
     <ClCompile Include="..\src\BFS.cpp" />
     <ClCompile Include="..\src\Connection.cpp" />
     <ClCompile Include="..\src\Dijkstra.cpp" />
+    <ClCompile Include="..\src\GBFS.cpp" />
     <ClCompile Include="..\src\Graph.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\MyPriorityQueue.cpp" />
     <ClCompile Include="..\src\Node.cpp" />
     <ClCompile Include="..\src\ScenePathFinding.cpp" />
     <ClCompile Include="..\src\ScenePathFinding2.cpp" />
@@ -150,16 +152,18 @@
     <ClInclude Include="..\src\BFS.h" />
     <ClInclude Include="..\src\Connection.h" />
     <ClInclude Include="..\src\Dijkstra.h" />
+    <ClInclude Include="..\src\GBFS.h" />
     <ClInclude Include="..\src\Graph.h" />
+    <ClInclude Include="..\src\MyPriorityQueue.h" />
     <ClInclude Include="..\src\Node.h" />
     <ClInclude Include="..\src\Path.h" />
     <ClInclude Include="..\src\ScenePathFinding.h" />
     <ClInclude Include="..\src\ScenePathFinding2.h" />
     <ClInclude Include="..\src\ScenePathFinding3.h" />
     <ClInclude Include="..\src\SteeringBehavior.h" />
-    <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SDL_SimpleApp.h" />
+    <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>

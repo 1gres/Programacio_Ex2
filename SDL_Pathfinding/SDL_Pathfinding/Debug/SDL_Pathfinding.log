@@ -1,3 +1,13 @@
-﻿  Agent.cpp
-  SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe
-  SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.pdb (Partial PDB)
+﻿  MyPriorityQueue.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+  ScenePathFinding.cpp
+  GBFS.cpp
+  Dijkstra.cpp
+c:\users\mmolina\documents\programacio_ex2\src\dijkstra.cpp(37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+c:\users\mmolina\documents\programacio_ex2\src\dijkstra.cpp(86): warning C4715: 'Dijkstra::DijkstraSearch': not all control paths return a value
+c:\users\mmolina\documents\programacio_ex2\src\gbfs.cpp(68): warning C4715: 'GBFS::GBFSSearch': not all control paths return a value
+GBFS.obj : error LNK2019: unresolved external symbol "public: float __thiscall GBFS::Heuristic(struct Vector2D,struct Vector2D)" (?Heuristic@GBFS@@QAEMUVector2D@@0@Z) referenced in function "public: class std::vector<struct Vector2D,class std::allocator<struct Vector2D> > __thiscall GBFS::GBFSSearch(class Graph,class Node,class Node)" (?GBFSSearch@GBFS@@QAE?AV?$vector@UVector2D@@V?$allocator@UVector2D@@@std@@@std@@VGraph@@VNode@@1@Z)
+C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe : fatal error LNK1120: 1 unresolved externals

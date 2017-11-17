@@ -5,6 +5,8 @@
 #include "Path.h"
 #include "Graph.h"
 #include "BFS.h"
+#include "Dijkstra.h"
+#include "GBFS.h"
 #include <iostream>
 #include "Node.h"
 
@@ -22,6 +24,8 @@ private:
 
 	Graph graph;
 	BFS bfs;
+	Dijkstra dijkstra;
+	GBFS gbfs;
 	Node start;
 	std::vector<Vector2D> myPath;
 	int tipusAlgoritme;

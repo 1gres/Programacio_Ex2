@@ -180,10 +180,18 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 							}
 						}
 						else if (tipusAlgoritme == 2) {
-							// Dikstra
+							// Dijkstra
+							myPath = dijkstra.DijkstraSearch(graph, agentPosition, coinPos);
+							for (unsigned int i = 0; i <myPath.size(); i++) {
+								path.points.push_back(cell2pix(myPath[i]));
+							}
 						}
 						else if (tipusAlgoritme == 3) {
-							//Greedy
+							//GBFS
+							myPath = gbfs.GBFSSearch(graph, agentPosition, coinPos);
+							for (unsigned int i = 0; i <myPath.size(); i++) {
+								path.points.push_back(cell2pix(myPath[i]));
+							}
 						}
 						else if (tipusAlgoritme == 4) {
 							//A*
@@ -266,7 +274,7 @@ void ScenePathFinding::draw()
 
 const char* ScenePathFinding::getTitle()
 {
-	return "BFS(Default): Q || Dikstra: W || Greedy: E || A*: R || Mouse: T";
+	return "BFS(Default): Q || Dijkstra: W || Greedy: E || A*: R || Mouse: T";
 }
 
 void ScenePathFinding::drawMaze()

@@ -1,19 +1,12 @@
-#include "Dijkstra.h"
+#include "GBFS.h"
 
-Dijkstra::Dijkstra() {
+
+GBFS::GBFS() {
 
 }
 
-float Dijkstra::RandomFloat(float a, float b) {
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
-}
-
-std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal)
+std::vector<Vector2D> GBFS::GBFSSearch(Graph graph, Node root, Node goal)
 {
-	
 	MyPriorityQueue<Vector2D, float> frontier;
 
 	Node current(0, 0);
@@ -27,14 +20,10 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 	std::unordered_map<Vector2D, Vector2D> came_from;
 	came_from[root.pos] = NULL;
 
-	std::unordered_map<Vector2D, float> cost_so_far;
-	cost_so_far[root.pos] = 0.f;
-
 	bool visited;
 	std::vector<Vector2D> path;
 
-	float new_cost, priority;
-	std::srand(time(NULL));
+	float priority;
 
 	while (!frontier.empty())
 	{
@@ -60,23 +49,16 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 		for (unsigned int i = 0; i < connections.size(); i++) {
 			visited = false;
 			next = connections[i];
-			new_cost = cost_so_far[current.pos] + RandomFloat(1.0f, 3.0f);
-			
-			for (unsigned int j = 0; j < came_from.size(); j++) {
-				if (cost_so_far.find(next.GetToNode().pos) != cost_so_far.end()) {
-					if (new_cost > cost_so_far[next.GetToNode().pos]) {
-						visited = true;
-					}
-					
-				}
 
-				else {
-					visited = false;
+			for (unsigned int j = 0; j < came_from.size(); j++) {
+				
+				if (came_from.find(next.GetToNode().pos) != came_from.end()) {
+					visited = true;
 				}
 			}
+
 			if (!visited) {
-				cost_so_far[next.GetToNode().pos] = new_cost;
-				priority = new_cost;
+				priority = Heuristic(goal.pos, next.GetToNode().pos);
 				frontier.put(next.GetToNode().pos, priority);
 				came_from[next.GetToNode().pos] = current.pos;
 			}
@@ -85,7 +67,6 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 	}
 }
 
-
-Dijkstra::~Dijkstra()
+GBFS::~GBFS()
 {
 }
