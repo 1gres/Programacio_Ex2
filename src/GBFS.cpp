@@ -5,6 +5,10 @@ GBFS::GBFS() {
 
 }
 
+float GBFS::Heuristic(Vector2D a, Vector2D b) {
+	return abs(a.x - b.x) + abs(a.y - b.y);
+}
+
 std::vector<Vector2D> GBFS::GBFSSearch(Graph graph, Node root, Node goal)
 {
 	MyPriorityQueue<Vector2D, float> frontier;
