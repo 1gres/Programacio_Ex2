@@ -1,19 +1,25 @@
-#include "Dijkstra.h"
+#include "AStar.h"
 
-Dijkstra::Dijkstra() {
 
+
+AStar::AStar()
+{
 }
 
-float Dijkstra::RandomFloat(float a, float b) {
+float AStar::RandomFloat(float a, float b) {
 	float random = ((float)rand()) / (float)RAND_MAX;
 	float diff = b - a;
 	float r = random * diff;
 	return a + r;
 }
 
-std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal)
+float AStar::Heuristic(Vector2D a, Vector2D b) {
+	return abs(a.x - b.x) + abs(a.y - b.y);
+}
+
+std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 {
-	
+
 	MyPriorityQueue<Vector2D, float> frontier;
 
 	Node current(0, 0);
@@ -61,13 +67,13 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 			visited = false;
 			next = connections[i];
 			new_cost = cost_so_far[current.pos] + RandomFloat(1.0f, 3.0f);
-			
+
 			for (unsigned int j = 0; j < cost_so_far.size(); j++) {
 				if (cost_so_far.find(next.GetToNode().pos) != cost_so_far.end()) {
 					if (new_cost > cost_so_far[next.GetToNode().pos]) {
 						visited = true;
 					}
-					
+
 				}
 
 				else {
@@ -76,7 +82,7 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 			}
 			if (!visited) {
 				cost_so_far[next.GetToNode().pos] = new_cost;
-				priority = new_cost;
+				priority = new_cost + Heuristic(goal.pos, next.GetToNode().pos);
 				frontier.put(next.GetToNode().pos, priority);
 				came_from[next.GetToNode().pos] = current.pos;
 			}
@@ -86,6 +92,6 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 }
 
 
-Dijkstra::~Dijkstra()
+AStar::~AStar()
 {
 }

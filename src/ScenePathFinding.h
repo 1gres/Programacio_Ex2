@@ -7,6 +7,7 @@
 #include "BFS.h"
 #include "Dijkstra.h"
 #include "GBFS.h"
+#include "AStar.h"
 #include <iostream>
 #include "Node.h"
 
@@ -26,6 +27,7 @@ private:
 	BFS bfs;
 	Dijkstra dijkstra;
 	GBFS gbfs;
+	AStar aStar;;
 	Node start;
 	std::vector<Vector2D> myPath;
 	int tipusAlgoritme;

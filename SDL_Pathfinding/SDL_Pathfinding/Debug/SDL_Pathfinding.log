@@ -1,6 +1,14 @@
-﻿  GBFS.cpp
+﻿  ScenePathFinding.cpp
+  Dijkstra.cpp
+c:\users\marc\documents\programacio_ex2\src\dijkstra.cpp(37): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  AStar.cpp
+c:\users\marc\documents\programacio_ex2\src\astar.cpp(43): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  Generando código...
+c:\users\marc\documents\programacio_ex2\src\astar.cpp(92): warning C4715: 'AStar::AStarSearch': no todas las rutas de acceso de control devuelven un valor
+c:\users\marc\documents\programacio_ex2\src\dijkstra.cpp(86): warning C4715: 'Dijkstra::DijkstraSearch': no todas las rutas de acceso de control devuelven un valor
+  Compilando...
+  main.cpp
   BFS.cpp
   Generando código...
 c:\users\marc\documents\programacio_ex2\src\bfs.cpp(63): warning C4715: 'BFS::BFSSearch': no todas las rutas de acceso de control devuelven un valor
-c:\users\marc\documents\programacio_ex2\src\gbfs.cpp(72): warning C4715: 'GBFS::GBFSSearch': no todas las rutas de acceso de control devuelven un valor
   SDL_Pathfinding.vcxproj -> C:\Users\Marc\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe

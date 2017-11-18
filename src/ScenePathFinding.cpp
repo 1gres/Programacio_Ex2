@@ -195,6 +195,10 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 						}
 						else if (tipusAlgoritme == 4) {
 							//A*
+							myPath = aStar.AStarSearch(graph, agentPosition, coinPos);
+							for (unsigned int i = 0; i <myPath.size(); i++) {
+								path.points.push_back(cell2pix(myPath[i]));
+							}
 						}
 
 						
