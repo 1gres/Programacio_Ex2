@@ -10,25 +10,31 @@
 #include "AStar.h"
 #include <iostream>
 #include "Node.h"
+#include <time.h> 
 
 
 class ScenePathFinding :
 	public Scene
 {
 public:
-	ScenePathFinding();
+	ScenePathFinding(int _tipusAlgoritme);
 	~ScenePathFinding();
 	void update(float dtime, SDL_Event *event);
+	void teleportBridge();
 	void draw();
 	const char* getTitle();
+	float RandomFloat(float a, float b);
 private:
-
 	Graph graph;
 	BFS bfs;
 	Dijkstra dijkstra;
 	GBFS gbfs;
-	AStar aStar;;
-	Node start;
+	AStar aStar;
+	void printMaxMinAverageNodesExplorats(int nodesExplorats);
+	int maxNodesExplorats;
+	int minNodesExplorats;
+	int averageNodesExplorats;
+	int sumAverageNodesExplorats;
 	std::vector<Vector2D> myPath;
 	int tipusAlgoritme;
 	std::vector<Agent*> agents;

@@ -150,7 +150,7 @@ void ScenePathFinding2::draw()
 
 const char* ScenePathFinding2::getTitle()
 {
-	return "SDL Steering Behaviors :: PathFinding1 Demo";
+	return "Exercici 2";
 }
 
 void ScenePathFinding2::drawMaze()

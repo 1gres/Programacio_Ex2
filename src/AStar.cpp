@@ -36,7 +36,6 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 	std::unordered_map<Vector2D, float> cost_so_far;
 	cost_so_far[root.pos] = 0.f;
 
-	bool visited;
 	std::vector<Vector2D> path;
 
 	float new_cost, priority;
@@ -64,31 +63,28 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 		}
 		connections = graph.GetConnections(current);
 		for (unsigned int i = 0; i < connections.size(); i++) {
-			visited = false;
 			next = connections[i];
 			new_cost = cost_so_far[current.pos] + RandomFloat(1.0f, 3.0f);
 
 			for (unsigned int j = 0; j < cost_so_far.size(); j++) {
 				if (cost_so_far.find(next.GetToNode().pos) != cost_so_far.end()) {
 					if (new_cost > cost_so_far[next.GetToNode().pos]) {
-						visited = true;
+						next.to.visited = true;
 					}
-
-				}
-
-				else {
-					visited = false;
 				}
 			}
-			if (!visited) {
+
+			if (!next.to.visited) {
 				cost_so_far[next.GetToNode().pos] = new_cost;
 				priority = new_cost + Heuristic(goal.pos, next.GetToNode().pos);
 				frontier.put(next.GetToNode().pos, priority);
 				came_from[next.GetToNode().pos] = current.pos;
+				visited.push_back(next.to);
 			}
 
 		}
 	}
+	return path;
 }
 
 

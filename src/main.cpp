@@ -20,7 +20,7 @@ int main(int argc, char ** argv)
 
 	SDL_SimpleApp *app = SDL_SimpleApp::Instance();
 
-	Scene *curr_scene = new ScenePathFinding;
+	Scene *curr_scene = new ScenePathFinding(1);
 	app->setWindowTitle(curr_scene->getTitle());
 
 	while (!quit)
@@ -39,12 +39,49 @@ int main(int argc, char ** argv)
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
+
+			if (event.key.keysym.scancode == SDL_SCANCODE_0)
+			{
+				delete(curr_scene);
+				curr_scene = new ScenePathFinding(0);
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+
 			if (event.key.keysym.scancode == SDL_SCANCODE_1)
 			{
 				delete(curr_scene);
-				curr_scene = new ScenePathFinding;
+				curr_scene = new ScenePathFinding(1);
 				app->setWindowTitle(curr_scene->getTitle());
 			}
+
+			if (event.key.keysym.scancode == SDL_SCANCODE_Q)
+			{
+				delete(curr_scene);
+				curr_scene = new ScenePathFinding(1);
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+
+			if (event.key.keysym.scancode == SDL_SCANCODE_W)
+			{
+				delete(curr_scene);
+				curr_scene = new ScenePathFinding(2);
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+
+			if (event.key.keysym.scancode == SDL_SCANCODE_E)
+			{
+				delete(curr_scene);
+				curr_scene = new ScenePathFinding(3);
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+
+			if (event.key.keysym.scancode == SDL_SCANCODE_R)
+			{
+				delete(curr_scene);
+				curr_scene = new ScenePathFinding(4);
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+
 			if (event.key.keysym.scancode == SDL_SCANCODE_2)
 			{
 				delete(curr_scene);

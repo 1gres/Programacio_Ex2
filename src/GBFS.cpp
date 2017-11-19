@@ -24,7 +24,6 @@ std::vector<Vector2D> GBFS::GBFSSearch(Graph graph, Node root, Node goal)
 	std::unordered_map<Vector2D, Vector2D> came_from;
 	came_from[root.pos] = NULL;
 
-	bool visited;
 	std::vector<Vector2D> path;
 
 	float priority;
@@ -51,24 +50,25 @@ std::vector<Vector2D> GBFS::GBFSSearch(Graph graph, Node root, Node goal)
 		}
 		connections = graph.GetConnections(current);
 		for (unsigned int i = 0; i < connections.size(); i++) {
-			visited = false;
 			next = connections[i];
 
 			for (unsigned int j = 0; j < came_from.size(); j++) {
 				
 				if (came_from.find(next.GetToNode().pos) != came_from.end()) {
-					visited = true;
+					next.to.visited = true;
 				}
 			}
 
-			if (!visited) {
+			if (!next.to.visited) {
 				priority = Heuristic(goal.pos, next.GetToNode().pos);
 				frontier.put(next.GetToNode().pos, priority);
 				came_from[next.GetToNode().pos] = current.pos;
+				visited.push_back(next.to);
 			}
 
 		}
 	}
+	return path;
 }
 
 GBFS::~GBFS()

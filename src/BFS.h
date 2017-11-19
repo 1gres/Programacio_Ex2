@@ -12,6 +12,7 @@ class BFS
 public:
 	BFS();
 	std::vector<Vector2D> BFSSearch(Graph graph, Node root, Node goal);
+	std::vector<Node> visited;
 	~BFS();
 private:
 	

@@ -14,9 +14,9 @@ class GBFS
 {
 public:
 	GBFS();
-	float RandomFloat(float a, float b);
 	float Heuristic(Vector2D a, Vector2D b);
 	std::vector<Vector2D> GBFSSearch(Graph graph, Node root, Node goal);
+	std::vector<Node> visited;
 	~GBFS();
 private:
 

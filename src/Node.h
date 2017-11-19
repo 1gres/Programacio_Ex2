@@ -11,6 +11,7 @@ public:
 	Node();
 	Node(float _x, float _y);
 	Node(Vector2D v);
+	bool visited;
 	inline float Length() const {
 		return (float)sqrt(pos.x * pos.x + pos.y * pos.y);
 	}

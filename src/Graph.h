@@ -20,7 +20,7 @@ public:
 	//Add new connection
 	void AddConnection(Connection c);
 
-	
+	std::vector<Connection>GetGraph();
 
 private:
 	std::vector<Connection> graph;

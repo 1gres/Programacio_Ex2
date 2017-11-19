@@ -11,6 +11,9 @@ Graph::~Graph()
 {
 }
 
+std::vector<Connection> Graph::GetGraph() {
+	return graph;
+}
 
 std::vector<Connection> Graph::GetConnections(Node from) {
 

@@ -16,8 +16,8 @@ public:
 	AStar();
 	float RandomFloat(float a, float b);
 	float Heuristic(Vector2D a, Vector2D b);
-
 	std::vector<Vector2D> AStarSearch(Graph graph, Node root, Node goal);
+	std::vector<Node> visited;
 	~AStar();
 };
 
