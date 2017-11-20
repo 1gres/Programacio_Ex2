@@ -5,7 +5,7 @@ Dijkstra::Dijkstra() {
 }
 
 int Dijkstra::random() {
-	return (std::rand() % 3) + 1;
+	return (std::rand() % 5) + 1;
 }
 
 std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal)
@@ -30,8 +30,8 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 	std::vector<Vector2D> path;
 
 	float new_cost, priority;
-	int cost = 0;
-	std::srand(time(NULL));
+	float cost = 0;
+	srand((unsigned int)time(NULL));
 	visited.clear();
 	costos.clear();
 
@@ -59,8 +59,8 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 		connections = graph.GetConnections(current);
 		for (unsigned int i = 0; i < connections.size(); i++) {
 			next = connections[i];
-			//cost = next.GetCost(); se laguea mucho....por eso usamos random
-			cost = random();
+			//cost = next.GetCost(); // fa que vagi malament
+			cost = random(); 
 			new_cost = cost_so_far[current.pos] + cost;
 			costos.push_back(cost);
 			for (unsigned int j = 0; j < cost_so_far.size(); j++) {
@@ -69,9 +69,6 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 						next.to.visited = true;
 					}
 					
-				}
-				else {
-					next.to.visited = false;
 				}
 			}
 			if (!next.to.visited) {

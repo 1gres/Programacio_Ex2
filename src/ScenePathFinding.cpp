@@ -51,7 +51,6 @@ ScenePathFinding::ScenePathFinding(int _tipusAlgoritme)
 	tipusAlgoritme = _tipusAlgoritme;
 	maxNodesExplorats = -1;
 	minNodesExplorats = 9999;
-	sumAverageNodesExplorats = 0;
 	averageNodesExplorats = 9999;
 
 	//BFS default algorithm
@@ -111,12 +110,10 @@ ScenePathFinding::ScenePathFinding(int _tipusAlgoritme)
 }
 
 int ScenePathFinding::random() {
-	return (std::rand() % 3) + 1;
+	return (std::rand() % 5) + 1;
 }
 
 void ScenePathFinding::printMaxMinAverageNodesExplorats(int nodesExplorats) {
-
-	//sumAverageNodesExplorats += nodesExplorats;
 
 	if (nodesExplorats >= maxNodesExplorats) {
 		maxNodesExplorats = nodesExplorats;
@@ -124,10 +121,15 @@ void ScenePathFinding::printMaxMinAverageNodesExplorats(int nodesExplorats) {
 	if (nodesExplorats <= minNodesExplorats) {
 		minNodesExplorats = nodesExplorats;
 	}
-	averageNodesExplorats = sumAverageNodesExplorats / maxNodesExplorats;
+	sizesVisited.push_back(nodesExplorats);
+	int sum = 0;
+	for (int i = 0; i < sizesVisited.size(); i++) {
+		sum += sizesVisited[i];
+	}
+	averageNodesExplorats = sum / sizesVisited.size();
 
-	//std::cout << "Max: " << maxNodesExplorats << ",   Min: " << minNodesExplorats << ",  Average: " << averageNodesExplorats << "\r";
-	std::cout << "Max: " << maxNodesExplorats << ",   Min: " << minNodesExplorats << "\r";
+	std::cout << "\r" << "Current: " << nodesExplorats << ",   Max: " << maxNodesExplorats << ",   Min: " << minNodesExplorats << ",   Average: " << averageNodesExplorats << "               ";
+	
 }
 
 ScenePathFinding::~ScenePathFinding()
@@ -297,14 +299,21 @@ void ScenePathFinding::draw()
 			{
 				printFrontier = cell2pix(dijkstra.visited[i].pos);
 				if (dijkstra.costos[i] == 1) {
-					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 50, 0, 255);
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 255, 0, 0, 255);
 				}
 				if (dijkstra.costos[i] == 2) {
-					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 75, 0, 255);
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 0, 255, 0, 255);
 				}
 				if (dijkstra.costos[i] == 3) {
-					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 100, 0, 255);
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 0, 0, 255, 255);
 				}
+				if (dijkstra.costos[i] == 4) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 255, 255, 0, 255);
+				}
+				if (dijkstra.costos[i] == 5) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 255, 0, 255, 255);
+				}
+
 			}
 		}
 		else if (tipusAlgoritme == 3) {
@@ -321,13 +330,19 @@ void ScenePathFinding::draw()
 			{
 				printFrontier = cell2pix(aStar.visited[i].pos);
 				if (aStar.costos[i] == 1) {
-					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 50, 0, 255);
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 255, 0, 0, 255);
 				}
 				if (aStar.costos[i] == 2) {
-					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 75, 0, 255);
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 0, 255, 0, 255);
 				}
 				if (aStar.costos[i] == 3) {
-					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 100, 0, 255);
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 0, 0, 255, 255);
+				}
+				if (aStar.costos[i] == 4) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 255, 255, 0, 255);
+				}
+				if (aStar.costos[i] == 5) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 255, 0, 255, 255);
 				}
 			}
 		}
@@ -380,9 +395,6 @@ void ScenePathFinding::drawCoin()
 }
 
 void ScenePathFinding::createGraph() {
-	
-	std::srand(time(NULL));
-
 	//40 celdas de width y 24 de height
 	//el total de todas las conexiones da como resultado: 2486
 	for (int i = 0; i < num_cell_x; i++)

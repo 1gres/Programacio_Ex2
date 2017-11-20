@@ -7,7 +7,7 @@ AStar::AStar()
 }
 
 int AStar::random() {
-	return (std::rand() % 3) + 1;
+	return (std::rand() % 5) + 1;
 }
 
 float AStar::Heuristic(Vector2D a, Vector2D b) {
@@ -36,9 +36,9 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 	std::vector<Vector2D> path;
 
 	float new_cost, priority;
-	std::srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	visited.clear();
-	int cost = 0;
+	float cost = 0;
 	costos.clear();
 
 	while (!frontier.empty())
@@ -64,7 +64,7 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 		connections = graph.GetConnections(current);
 		for (unsigned int i = 0; i < connections.size(); i++) {
 			next = connections[i];
-			//cost = next.GetCost();
+			//cost = next.GetCost(); //fa que vagi malament
 			cost = random();
 			new_cost = cost_so_far[current.pos] + cost;
 			costos.push_back(cost);
@@ -75,6 +75,7 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 						next.to.visited = true;
 					}
 				}
+				
 			}
 
 			if (!next.to.visited) {

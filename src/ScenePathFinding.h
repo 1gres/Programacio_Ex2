@@ -34,7 +34,7 @@ private:
 	int maxNodesExplorats;
 	int minNodesExplorats;
 	int averageNodesExplorats;
-	int sumAverageNodesExplorats;
+	std::vector<float> sizesVisited;
 	std::vector<Vector2D> myPath;
 	int tipusAlgoritme;
 	std::vector<Agent*> agents;

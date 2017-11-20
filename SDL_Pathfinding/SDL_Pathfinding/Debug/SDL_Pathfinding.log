@@ -1,1 +1,7 @@
-﻿  SDL_Pathfinding.vcxproj -> C:\Users\Marc\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe
+﻿  Dijkstra.cpp
+c:\users\mmolina\documents\programacio_ex2\src\dijkstra.cpp(65): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+  AStar.cpp
+c:\users\mmolina\documents\programacio_ex2\src\astar.cpp(70): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+  Generating Code...
+  SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe
+  SDL_Pathfinding.vcxproj -> C:\Users\mmolina\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.pdb (Partial PDB)
