@@ -6,11 +6,8 @@ AStar::AStar()
 {
 }
 
-float AStar::RandomFloat(float a, float b) {
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
+int AStar::random() {
+	return (std::rand() % 3) + 1;
 }
 
 float AStar::Heuristic(Vector2D a, Vector2D b) {
@@ -40,6 +37,9 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 
 	float new_cost, priority;
 	std::srand(time(NULL));
+	visited.clear();
+	int cost = 0;
+	costos.clear();
 
 	while (!frontier.empty())
 	{
@@ -64,7 +64,10 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 		connections = graph.GetConnections(current);
 		for (unsigned int i = 0; i < connections.size(); i++) {
 			next = connections[i];
-			new_cost = cost_so_far[current.pos] + RandomFloat(1.0f, 3.0f);
+			//cost = next.GetCost();
+			cost = random();
+			new_cost = cost_so_far[current.pos] + cost;
+			costos.push_back(cost);
 
 			for (unsigned int j = 0; j < cost_so_far.size(); j++) {
 				if (cost_so_far.find(next.GetToNode().pos) != cost_so_far.end()) {

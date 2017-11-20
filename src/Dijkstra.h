@@ -9,14 +9,16 @@
 #include "Vector2D.h" 
 #include <functional>
 #include "MyPriorityQueue.h"
+#include <map>
 
 class Dijkstra
 {
 public:
 	Dijkstra();
-	float RandomFloat(float a, float b);
+	int random();
 	std::vector<Vector2D> DijkstraSearch(Graph graph, Node root, Node goal);
 	std::vector<Node> visited;
+	std::vector<float> costos;
 	~Dijkstra();
 private:
 

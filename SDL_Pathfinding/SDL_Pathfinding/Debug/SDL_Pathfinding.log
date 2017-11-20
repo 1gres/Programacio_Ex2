@@ -1,7 +1,1 @@
-﻿  ScenePathFinding.cpp
-c:\users\marc\documents\programacio_ex2\src\scenepathfinding.cpp(297): warning C4018: '<': no coinciden signed/unsigned
-c:\users\marc\documents\programacio_ex2\src\scenepathfinding.cpp(311): warning C4018: '<': no coinciden signed/unsigned
-c:\users\marc\documents\programacio_ex2\src\scenepathfinding.cpp(324): warning C4018: '<': no coinciden signed/unsigned
-c:\users\marc\documents\programacio_ex2\src\scenepathfinding.cpp(337): warning C4018: '<': no coinciden signed/unsigned
-c:\users\marc\documents\programacio_ex2\src\scenepathfinding.cpp(393): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
-  SDL_Pathfinding.vcxproj -> C:\Users\Marc\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe
+﻿  SDL_Pathfinding.vcxproj -> C:\Users\Marc\Documents\Programacio_Ex2\\bin\SDL_Pathfinding.exe

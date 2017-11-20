@@ -23,7 +23,6 @@ public:
 	void teleportBridge();
 	void draw();
 	const char* getTitle();
-	float RandomFloat(float a, float b);
 private:
 	Graph graph;
 	BFS bfs;
@@ -31,6 +30,7 @@ private:
 	GBFS gbfs;
 	AStar aStar;
 	void printMaxMinAverageNodesExplorats(int nodesExplorats);
+	int random();
 	int maxNodesExplorats;
 	int minNodesExplorats;
 	int averageNodesExplorats;

@@ -31,6 +31,7 @@ public:
 	inline bool operator>=(const Node& rhs) const {
 		return !(std::tie(pos.x, pos.y) <  std::tie(rhs.pos.x, rhs.pos.y));
 	}
+	
 	~Node();
 	
 };

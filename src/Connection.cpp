@@ -1,7 +1,7 @@
 #include "Connection.h"
 
 
-Connection::Connection(Node _from, Node _to, float _cost)
+Connection::Connection(Node _from, Node _to, int _cost)
 {
 	from = _from;
 	to = _to;
@@ -14,7 +14,7 @@ Connection::~Connection()
 }
 
 
-float Connection::GetCost() {
+int Connection::GetCost() {
 	return cost;
 }
 

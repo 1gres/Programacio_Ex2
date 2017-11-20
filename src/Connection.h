@@ -6,12 +6,12 @@ class Connection
 public:
 	Node from, to;
 
-	float cost;
-	Connection(Node _from, Node _to, float _cost);
+	int cost;
+	Connection(Node _from, Node _to, int _cost);
 	~Connection();
 
 	//Returns the non-negative cost of the connection
-	float GetCost();
+	int GetCost();
 
 	//Returns the node that this connection came from
 	Node GetFromNode();

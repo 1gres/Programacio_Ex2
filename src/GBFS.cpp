@@ -27,6 +27,7 @@ std::vector<Vector2D> GBFS::GBFSSearch(Graph graph, Node root, Node goal)
 	std::vector<Vector2D> path;
 
 	float priority;
+	visited.clear();
 
 	while (!frontier.empty())
 	{

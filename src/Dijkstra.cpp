@@ -4,11 +4,8 @@ Dijkstra::Dijkstra() {
 
 }
 
-float Dijkstra::RandomFloat(float a, float b) {
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
+int Dijkstra::random() {
+	return (std::rand() % 3) + 1;
 }
 
 std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal)
@@ -33,7 +30,10 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 	std::vector<Vector2D> path;
 
 	float new_cost, priority;
+	int cost = 0;
 	std::srand(time(NULL));
+	visited.clear();
+	costos.clear();
 
 	while (!frontier.empty())
 	{
@@ -59,8 +59,10 @@ std::vector<Vector2D> Dijkstra::DijkstraSearch(Graph graph, Node root, Node goal
 		connections = graph.GetConnections(current);
 		for (unsigned int i = 0; i < connections.size(); i++) {
 			next = connections[i];
-			new_cost = cost_so_far[current.pos] + RandomFloat(1.0f, 3.0f);
-			
+			//cost = next.GetCost(); se laguea mucho....por eso usamos random
+			cost = random();
+			new_cost = cost_so_far[current.pos] + cost;
+			costos.push_back(cost);
 			for (unsigned int j = 0; j < cost_so_far.size(); j++) {
 				if (cost_so_far.find(next.GetToNode().pos) != cost_so_far.end()) {
 					if (new_cost > cost_so_far[next.GetToNode().pos]) {

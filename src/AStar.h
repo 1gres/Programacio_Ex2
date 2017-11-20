@@ -14,7 +14,8 @@ class AStar
 {
 public:
 	AStar();
-	float RandomFloat(float a, float b);
+	int random();
+	std::vector<float> costos;
 	float Heuristic(Vector2D a, Vector2D b);
 	std::vector<Vector2D> AStarSearch(Graph graph, Node root, Node goal);
 	std::vector<Node> visited;

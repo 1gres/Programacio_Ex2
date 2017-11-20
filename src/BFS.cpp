@@ -19,6 +19,7 @@ std::vector<Vector2D> BFS::BFSSearch(Graph graph, Node root, Node goal)
 	came_from[root.pos] = NULL;
 
 	std::vector<Vector2D> path;
+	visited.clear();
 
 	while (!frontier.empty())
 	{

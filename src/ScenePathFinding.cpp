@@ -110,11 +110,8 @@ ScenePathFinding::ScenePathFinding(int _tipusAlgoritme)
 	}
 }
 
-float ScenePathFinding::RandomFloat(float a, float b) {
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
+int ScenePathFinding::random() {
+	return (std::rand() % 3) + 1;
 }
 
 void ScenePathFinding::printMaxMinAverageNodesExplorats(int nodesExplorats) {
@@ -127,7 +124,7 @@ void ScenePathFinding::printMaxMinAverageNodesExplorats(int nodesExplorats) {
 	if (nodesExplorats <= minNodesExplorats) {
 		minNodesExplorats = nodesExplorats;
 	}
-	//averageNodesExplorats = sumAverageNodesExplorats / maxNodesExplorats;
+	averageNodesExplorats = sumAverageNodesExplorats / maxNodesExplorats;
 
 	//std::cout << "Max: " << maxNodesExplorats << ",   Min: " << minNodesExplorats << ",  Average: " << averageNodesExplorats << "\r";
 	std::cout << "Max: " << maxNodesExplorats << ",   Min: " << minNodesExplorats << "\r";
@@ -270,6 +267,8 @@ void ScenePathFinding::draw()
 	drawMaze();
 	drawCoin();
 
+	Vector2D agentPos;
+	agentPos = pix2cell(agents[0]->getPosition());
 
 	if (draw_grid)
 	{
@@ -283,43 +282,32 @@ void ScenePathFinding::draw()
 			SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 0, j, SRC_WIDTH, j);
 		}
 
-		Vector2D agentPos;
-		agentPos = pix2cell(agents[0]->getPosition());
-
 		//printar frontera segun el algoritmo
 		if (tipusAlgoritme == 1) {
-			
-			if (agentPos == coinPosition) {
-				bfs.visited.clear();
-			}
-
 			Vector2D printFrontier;
 			for (int i = 0; i < bfs.visited.size(); i = i++)
 			{
 				printFrontier = cell2pix(bfs.visited[i].pos);
 				draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 50, 0, 255);
-			}
-			
+			}			
 		}
 		else if (tipusAlgoritme == 2) {
-
-			if (agentPos == coinPosition) {
-				dijkstra.visited.clear();
-			}
-
 			Vector2D printFrontier;
 			for (int i = 0; i < dijkstra.visited.size(); i = i++)
 			{
 				printFrontier = cell2pix(dijkstra.visited[i].pos);
-				draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 50, 0, 255);
+				if (dijkstra.costos[i] == 1) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 50, 0, 255);
+				}
+				if (dijkstra.costos[i] == 2) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 75, 0, 255);
+				}
+				if (dijkstra.costos[i] == 3) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 100, 0, 255);
+				}
 			}
 		}
 		else if (tipusAlgoritme == 3) {
-
-			if (agentPos == coinPosition) {
-				gbfs.visited.clear();
-			}
-
 			Vector2D printFrontier;
 			for (int i = 0; i < gbfs.visited.size(); i = i++)
 			{
@@ -328,16 +316,19 @@ void ScenePathFinding::draw()
 			}
 		}
 		else if (tipusAlgoritme == 4) {
-
-			if (agentPos == coinPosition) {
-				aStar.visited.clear();
-			}
-
 			Vector2D printFrontier;
 			for (int i = 0; i < aStar.visited.size(); i = i++)
 			{
 				printFrontier = cell2pix(aStar.visited[i].pos);
-				draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 50, 0, 255);
+				if (aStar.costos[i] == 1) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 50, 0, 255);
+				}
+				if (aStar.costos[i] == 2) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 75, 0, 255);
+				}
+				if (aStar.costos[i] == 3) {
+					draw_circle(TheApp::Instance()->getRenderer(), (int)printFrontier.x, (int)printFrontier.y, 5, 100, 100, 0, 255);
+				}
 			}
 		}
 
@@ -396,7 +387,6 @@ void ScenePathFinding::createGraph() {
 	//el total de todas las conexiones da como resultado: 2486
 	for (int i = 0; i < num_cell_x; i++)
 	{
-		//std::cout << i << std::endl;
 		for (int j = 0; j < num_cell_y; j++)
 		{
 
@@ -414,7 +404,7 @@ void ScenePathFinding::createGraph() {
 
 				//Mirar derecha(que el to.pos con el nuevo valor en x e y sean validos) y que no haya muro
 				if (isValidCell(to.pos) && terrain[i + 1][j] != 0 && !((i == 39 || i == 0) && (j >= 10 && j <= 12))) {
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 				}
 
@@ -423,7 +413,7 @@ void ScenePathFinding::createGraph() {
 
 				//Mirar izquierda(que el to.pos con el nuevo valor en x e y sean validos) y que no haya muro
 				if (isValidCell(to.pos) && terrain[i - 1][j] != 0 && !((i == 39 || i == 0) && (j >= 10 && j <= 12))) {
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 				}
 
@@ -432,7 +422,7 @@ void ScenePathFinding::createGraph() {
 
 				//Mirar arriba(que el to.pos con el nuevo valor en x e y sean validos) y que no haya muro
 				if (isValidCell(to.pos) && terrain[i][j - 1] != 0 && !((i == 39 || i == 0) && (j >= 10 && j <= 12))) {
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 				}
 
@@ -441,37 +431,37 @@ void ScenePathFinding::createGraph() {
 
 				//Mirar abajo(que el to.pos con el nuevo valor en x e y sean validos) y que no haya muro
 				if (isValidCell(to.pos) && terrain[i][j + 1] != 0 && !((i == 39 || i == 0) && (j >= 10 && j <= 12))) {
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 				}
 
 				//conexiones derecha (banda)
 				if (((i == 39) && (j >= 10 && j <= 12))) {
 					to.pos.x = (float)0; to.pos.y = (float)j;
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 
 					to.pos.x = (float)i - 1; to.pos.y = (float)j;
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 
 					if (j == 10) {
 						to.pos.x = (float)i; to.pos.y = (float)j+1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 					}
 					else if (j == 11) {
 						to.pos.x = (float)i; to.pos.y = (float)j - 1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 
 						to.pos.x = (float)i; to.pos.y = (float)j + 1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 					}
 					else if (j == 12) {
 						to.pos.x = (float)i; to.pos.y = (float)j - 1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 					}
 
@@ -480,30 +470,30 @@ void ScenePathFinding::createGraph() {
 				//conexiones izquierda (banda)
 				if (((i == 0) && (j >= 10 && j <= 12))) {
 					to.pos.x = (float)i + 1; to.pos.y = (float)j;
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 					
 					to.pos.x = (float)39; to.pos.y = (float)j;
-					con = { from, to, RandomFloat(1.0, 3.0f) };
+					con = { from, to, random() };
 					graph.AddConnection(con);
 
 					if (j == 10) {
 						to.pos.x = (float)i; to.pos.y = (float)j + 1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 					}
 					else if (j == 11) {
 						to.pos.x = (float)i; to.pos.y = (float)j - 1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 
 						to.pos.x = (float)i; to.pos.y = (float)j + 1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 					}
 					else if (j == 12) {
 						to.pos.x = (float)i; to.pos.y = (float)j - 1;
-						con = { from, to, RandomFloat(1.0, 3.0f) };
+						con = { from, to, random() };
 						graph.AddConnection(con);
 					}
 				}
