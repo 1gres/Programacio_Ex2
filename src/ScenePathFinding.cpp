@@ -94,7 +94,7 @@ ScenePathFinding::ScenePathFinding(int _tipusAlgoritme)
 	else if (tipusAlgoritme == 4) {
 		system("cls");
 		std::cout << "tipusAlgoritme = 4, A*" << std::endl;
-		myPath = aStar.AStarSearch(graph, agentPosition, coinPos);
+		myPath = aStar.AStarSearch(graph, agentPosition, coinPos, false);
 
 		for (unsigned int i = 0; i < myPath.size(); i++) {
 
@@ -234,7 +234,7 @@ void ScenePathFinding::update(float dtime, SDL_Event *event)
 						}
 						else if (tipusAlgoritme == 4) {
 							//A*
-							myPath = aStar.AStarSearch(graph, agentPosition, coinPos);
+							myPath = aStar.AStarSearch(graph, agentPosition, coinPos, false);
 							for (unsigned int i = 0; i <myPath.size(); i++) {
 								path.points.push_back(cell2pix(myPath[i]));
 							}

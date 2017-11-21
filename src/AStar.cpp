@@ -14,7 +14,7 @@ float AStar::Heuristic(Vector2D a, Vector2D b) {
 	return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
-std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
+std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal, bool varisObjectius)
 {
 
 	MyPriorityQueue<Vector2D, float> frontier;
@@ -37,9 +37,12 @@ std::vector<Vector2D> AStar::AStarSearch(Graph graph, Node root, Node goal)
 
 	float new_cost, priority;
 	srand((unsigned int)time(NULL));
-	visited.clear();
+	
 	float cost = 0;
-	costos.clear();
+	if (!varisObjectius) {
+		visited.clear();
+		costos.clear();
+	}	
 
 	while (!frontier.empty())
 	{
